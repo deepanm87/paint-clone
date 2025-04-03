@@ -19,8 +19,8 @@ let currentSize = 10
 let bucketColor = '#FFFFFF'
 let currentColor = '#A51DAB'
 let isEraser = false
-// let isMouseDown = false;
-// let drawnArray = [];
+let isMouseDown = false
+let drawnArray = []
 
 
 function displayBrushSize() {
@@ -115,7 +115,7 @@ function createCanvas() {
 //   drawnArray.push(line);
 // }
 
-// Get Mouse Position
+
 function getMousePosition(event) {
   const boundaries = canvas.getBoundingClientRect()
   return {
@@ -124,38 +124,38 @@ function getMousePosition(event) {
   }
 }
 
-// Mouse Down
+
 canvas.addEventListener('mousedown', (event) => {
   isMouseDown = true
   const currentPosition = getMousePosition(event)
   console.log('mouse is clicked', currentPosition)
-//   context.moveTo(currentPosition.x, currentPosition.y);
-//   context.beginPath();
-//   context.lineWidth = currentSize;
-//   context.lineCap = 'round';
-//   context.strokeStyle = currentColor;
-});
+  context.moveTo(currentPosition.x, currentPosition.y)
+  context.beginPath()
+  context.lineWidth = currentSize
+  context.lineCap = 'round'
+  context.strokeStyle = currentColor
+})
 
-// Mouse Move
+
 canvas.addEventListener('mousemove', (event) => {
   if (isMouseDown) {
     const currentPosition = getMousePosition(event)
     console.log('mouse is moving', currentPosition)
-  //   context.lineTo(currentPosition.x, currentPosition.y);
-  //   context.stroke();
-  //   storeDrawn(
-  //     currentPosition.x,
-  //     currentPosition.y,
-  //     currentSize,
-  //     currentColor,
-  //     isEraser,
-  //   );
-  // } else {
-  //   storeDrawn(undefined);
+    context.lineTo(currentPosition.x, currentPosition.y);
+    context.stroke();
+    storeDrawn(
+    currentPosition.x,
+     currentPosition.y,
+     currentSize,
+      currentColor,
+      isEraser,
+    )
+   } else {
+    storeDrawn(undefined)
   }
-});
+})
 
-// Mouse Up
+
 canvas.addEventListener('mouseup', () => {
   isMouseDown = false;
   console.log('mouse is unclicked');
