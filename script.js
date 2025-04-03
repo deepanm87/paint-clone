@@ -21,6 +21,7 @@ let currentColor = '#A51DAB'
 let isEraser = false
 let isMouseDown = false
 let drawnArray = []
+const BRUSH_TIME = 1500
 
 function displayBrushSize() {
   brushSize.textContent = brushSlider.value < 10 ? `0${brushSlider.value}` : brushSlider.value
@@ -51,6 +52,10 @@ eraser.addEventListener('click', () => {
   currentSize = 50
  })
 
+ function brushTimeSetTimeout(ms) {
+  setTimeout(switchToBrush, ms)
+ }
+
 function switchToBrush() {
   isEraser = false
   activeToolEl.textContent = 'Brush'
@@ -75,7 +80,7 @@ clearCanvasBtn.addEventListener('click', () => {
   createCanvas()
   drawnArray = []
   activeToolEl.textContent = 'Canvas Cleared'
-  setTimeout(switchToBrush, 1500)
+  
  })
 
 function restoreCanvas() {
@@ -151,7 +156,7 @@ canvas.addEventListener('mouseup', () => {
 saveStorageBtn.addEventListener('click', () => {
   localStorage.setItem('savedCanvas', JSON.stringify(drawnArray))
   activeToolEl.textContent = 'Canvas Saved'
-  setTimeout(switchToBrush, 1500)
+  brushTimeSetTimeout(BRUSH_TIME)
  })
 
  loadStorageBtn.addEventListener('click', () => {
@@ -159,7 +164,7 @@ saveStorageBtn.addEventListener('click', () => {
     drawnArray = JSON.parse(localStorage.savedCanvas)
     restoreCanvas()
     activeToolEl.textContent = 'Canvas Loaded'
-    setTimeout(switchToBrush, 1500)
+    brushTimeSetTimeout(BRUSH_TIME)
   } else {
       activeToolEl.textContent = 'No Canvas found'
   } 
@@ -168,14 +173,14 @@ saveStorageBtn.addEventListener('click', () => {
 clearStorageBtn.addEventListener('click', () => {
   localStorage.removeItem('savedCanvas')
   activeToolEl.textContent = 'Local Storage Cleared'
-  setTimeout(switchToBrush, 1500)
+  brushTimeSetTimeout(BRUSH_TIME)
  })
 
 downloadBtn.addEventListener('click', () => {
   downloadBtn.href = canvas.toDataURL('image/jpeg', 1)
   downloadBtn.download = 'paint-example.jpeg'
   activeToolEl.textContent = 'Image File Saved'
-  setTimeout(switchToBrush, 1500)
+  brushTimeSetTimeout(BRUSH_TIME)
 })
 
 brushIcon.addEventListener('click', switchToBrush)
